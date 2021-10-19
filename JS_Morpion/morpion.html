@@ -113,7 +113,7 @@
                     <h2>A joueur <label id="tourJoueur"></label> de jouer</h2>
                 </td>
                 <td>
-                   
+
                 </td>
             </tr>
         </table>
@@ -149,7 +149,7 @@
                         ligne.appendChild(cellule)
                         cellule.addEventListener("click", function () { //on intercepte le clic et ajoute un event
                             cellule.style.color = "red";
-                            
+
                             setTimeout(function () {
                                 cellule.style.color = "";
                                 if (!cellule.innerHTML) {
@@ -170,25 +170,31 @@
             }
 
             function verif(plateau, jActif) {
-                for (let l = 0; l < 3; l++) { // verif lignes colonnes
-                    if (((plateau[l][0] === plateau[l][1] && plateau[l][1] === plateau[l][2]) && plateau[l][0] != "") || ((plateau[0][l] === plateau[1][l] && plateau[1][l] === plateau[2][l]) && plateau[0][l] != "")) {
-                        victoire(joueur[jActif], jActif)
+                if (// test diagonales
+                    (((plateau[0][0] === plateau[1][1] && plateau[1][1] === plateau[2][2]) && plateau[0][0] != "")
+                        || ((plateau[0][2] === plateau[1][1] && plateau[1][1] === plateau[2][0]) && plateau[0][2] != ""))
+                    // OU  lignes -colonnes  on commence par lignes/colonnes 0
+                    || ((plateau[0][0] === plateau[0][1] && plateau[0][1] === plateau[0][2]) && plateau[0][0] != "")
+                    || ((plateau[0][0] === plateau[1][0] && plateau[1][0] === plateau[2][0]) && plateau[0][0] != "")
+                    // puis l/c 1
+                    || ((plateau[1][0] === plateau[1][1] && plateau[1][1] === plateau[1][2]) && plateau[1][0] != "")
+                    || ((plateau[0][1] === plateau[1][1] && plateau[1][1] === plateau[2][1]) && plateau[0][1] != "")
+                    // puis l/c 2
+                    || ((plateau[2][0] === plateau[2][1] && plateau[2][1] === plateau[2][2]) && plateau[2][0] != "")
+                    || ((plateau[0][2] === plateau[1][2] && plateau[1][2] === plateau[2][2]) && plateau[0][2] != "")
+                ) {victoire(joueur[jActif], jActif)}
+                 else {
+                    var matchNul = 0 // test match null
+                    for (let l = 0; l < 3; l++) {
+                        for (let c = 0; c < 3; c++) {
+                            if (plateau[l][c] != "") { matchNul++ }
+                        }
                     }
+                    if (matchNul == 9) { echec(joueur[jActif], jActif) }
                 }
-                // verif diagonales
-                if (((plateau[0][0] === plateau[1][1] && plateau[1][1] === plateau[2][2]) && plateau[0][0] != "") || ((plateau[0][2] === plateau[1][1] && plateau[1][1] === plateau[2][0]) && plateau[0][2] != "")) {
-                    victoire(joueur[jActif], jActif)
-                }
-                var matchNul = 0 // test match null
-                for (let l = 0; l < 3; l++) {
-                    for (let c = 0; c < 3; c++) {
-                        if (plateau[l][c] != "") { matchNul++ }
-                    }
-                }
-                if (matchNul == 9) { echec() }
             }
 
-            function echec() {
+            function echec(joueur, jActif) {
                 if (confirm("MATCH NUL ! concentrez vous un peu que diable !!\ncontinuer ? (annuler met a zero les scores)")) {
                     if (jActif == 0) { jActif++ } else { jActif-- } // on change de joueur 
                 } else { // Code à éxécuter si le l'utilisateur clique sur "OK"
@@ -210,33 +216,34 @@
 
                 init()
             }
-// Création du tableau contenu dans chaque listes déroulantes
-icones = new Array();
-icones[0] = "🤹";
-icones[1] = "🥀";
-icones[2] = "🥎";
-icones[3] = "🦄";
-icones[4] = "🦊";
-icones[5] = "🤪";
-icones[6] = "🦋";
- 
-// Fonction permettant la création dynamique des listes déroulantes
-function mesListes(){
-	var i, j;
-	var html = "<form id=\"listes\" name=\"listes\">";
-// début création dynamique des listes déroulantes
-	for (i=1; i<=2; i++){
-		html += "<span id=\"joueur "+i+"\">"+"Joueur "+i+"</span> - <select name=\"liste"+i+"\"  ><option value=\"\">Choisir...</option>";
-// début création du contenu des listes dynamiques en fonction du tableau icones
-		for (j=0; j<icones.length; j++){
-			html += ("<option value=\""+icones[j]+"\">"+icones[j]+"</option>");}
-// fin création du contenu des listes dynamiques en fonction du tableau icones
-html += ("</select><br>");
-	}
-	html += "</form>";
-    return html
-}
-document.getElementById("listederoul").innerHTML = mesListes();
+            // Création du tableau contenu dans chaque listes déroulantes
+            icones = new Array();
+            icones[0] = "🤹";
+            icones[1] = "🥀";
+            icones[2] = "🥎";
+            icones[3] = "🦄";
+            icones[4] = "🦊";
+            icones[5] = "🤪";
+            icones[6] = "🦋";
+
+            // Fonction permettant la création dynamique des listes déroulantes
+            function mesListes() {
+                var i, j;
+                var html = "<form id=\"listes\" name=\"listes\">";
+                // début création dynamique des listes déroulantes
+                for (i = 1; i <= 2; i++) {
+                    html += "<span id=\"joueur " + i + "\">" + "Joueur " + i + "</span> - <select name=\"liste" + i + "\"  ><option value=\"\">Choisir...</option>";
+                    // début création du contenu des listes dynamiques en fonction du tableau icones
+                    for (j = 0; j < icones.length; j++) {
+                        html += ("<option value=\"" + icones[j] + "\">" + icones[j] + "</option>");
+                    }
+                    // fin création du contenu des listes dynamiques en fonction du tableau icones
+                    html += ("</select><br>");
+                }
+                html += "</form>";
+                return html
+            }
+            document.getElementById("listederoul").innerHTML = mesListes();
         </script>
     </div>
 </body>
