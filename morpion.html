@@ -15,7 +15,7 @@
 
 
    <div class="player hd-border"> <div id="message" >PENDING...</div>
- <div id="bip"> </div></div>
+ <div id="bip">tic tac... </div></div>
     <main>
         <div id="player1" class="player hd-border">
             <h1 class="name"></h1>
@@ -75,7 +75,7 @@
             message.innerHTML = '<strong>' + msg + '</strong>'
         }
 
-        function folie(oldJet) {
+        function crazy(oldJet) {
             var jet = (Math.floor(Math.random() * 3) + 1) * 90
             if (jet == oldJet) { jet += 90 }
             document.querySelector("#grid").style.rotate = jet + "deg"
@@ -94,7 +94,7 @@
             timer--;
             if (timer == 0) {
                 Player.playerTurn = (Player.playerTurn === player1) ? player2 : player1
-                        displayMessage("C'est au tour du joueur " + Player.playerTurn.symbol)
+                        displayMessage("C'est au tour de "+Player.playerTurn.name+" " + Player.playerTurn.symbol)
                         timer = turnTime;
             }
             else { document.getElementById("bip").innerHTML = timer + " secondes restantes"; }
@@ -104,8 +104,8 @@
             intervalId = setInterval(bip, 1000);
         }
 
-        const player1 = new Player(window.prompt("Joueur 1 entrez votre nom SVP :", "Albert"), "🦄", document.querySelector("#player1"))
-        const player2 = new Player(window.prompt("Joueur 2 entrez votre nom SVP :", "Julie"), "🦊", document.querySelector("#player2"))
+        const player1 = new Player(window.prompt("Joueur 1 entrez votre nom SVP :", "Romain"), "🦊", document.querySelector("#player1"))
+        const player2 = new Player(window.prompt("Joueur 2 entrez votre nom SVP :", "Miss V"), "🦄", document.querySelector("#player2"))
 
         Player.playerTurn = player1
         //la propriété statique playerTurn est un pointeur vers l'objet Player à qui c'est le tour
@@ -128,7 +128,7 @@
         const newSetButton = document.querySelector("#newSet")
         newSetButton.style.display = "none"
         const message = document.querySelector("#message")
-        displayMessage("Tour de :" + Player.playerTurn.name + " (" + Player.playerTurn.symbol + ")")
+        displayMessage("C'est au tour de "+Player.playerTurn.name+" " + Player.playerTurn.symbol)
         timer = turnTime;
         var intervalId = null;
         start()
@@ -137,7 +137,7 @@
                 if (cell.innerText === "" && victory === false) {
                     cell.innerText = Player.playerTurn.symbol
                     counter++
-                    oldJet = folie(oldJet)
+                    oldJet = crazy(oldJet)
                     //vérifier victoire
                     for (let cond of conditions) {
                         if (cells[cond[0]].innerText === Player.playerTurn.symbol &&
@@ -147,22 +147,25 @@
                         }
                     }
                     if (counter <= 9 && victory === true) {
-                        displayMessage("Victoire du joueur " + Player.playerTurn.symbol)
+                        displayMessage("Victoire de "+Player.playerTurn.name+" " + Player.playerTurn.symbol)
                         Player.playerTurn.increaseScore()
+                        Player.playerTurn.tag.querySelector(".symbol").style.scale = "10"
+
                         finish();
                         newSetButton.style.display = "initial"
                     } else if (counter === 9 && victory === true) {
-                        displayMessage("Victoire du joueur " + Player.playerTurn.symbol)
+                        displayMessage("Victoire de "+Player.playerTurn.name+" " + Player.playerTurn.symbol)
+                        Player.playerTurn.tag.querySelector(".symbol").style.scale = "10"
                         Player.playerTurn.increaseScore()
                         finish();
                         newSetButton.style.display = "initial"
                     } else if (counter === 9) {
                         newSetButton.style.display = "initial"
-                        displayMessage("Match nul, les gars ! ")
+                        displayMessage("Match nul, les gars !")
                         finish();
                     } else {
                         Player.playerTurn = (Player.playerTurn === player1) ? player2 : player1
-                        displayMessage("C'est au tour du joueur " + Player.playerTurn.symbol)
+                        displayMessage("C'est au tour de "+Player.playerTurn.name+" " + Player.playerTurn.symbol)
                         timer = turnTime;
                     }
                 }
@@ -170,11 +173,12 @@
         })
 
         newSetButton.addEventListener("click", () => {
+            Player.playerTurn.tag.querySelector(".symbol").style.scale = "1"
             cells.forEach(cell => cell.innerText = "")
             newSetButton.style.display = "none"
             counter = 0
             victory = false
-            displayMessage("C'est au tour du joueur " + Player.playerTurn.symbol)
+            displayMessage("C'est au tour de "+Player.playerTurn.name+" " + Player.playerTurn.symbol)
             timer = turnTime;
             start()
         })

@@ -68,9 +68,6 @@
             src: url("fonts/icons.eot?#iefix") format("eot"), url("fonts/icons.woff") format("woff"), url("fonts/icons.ttf") format("truetype");
         }
 
-
-
-
         * {
             box-sizing: border-box;
         }
@@ -93,7 +90,12 @@
             flex: 1;
             min-width: 150px;
             font-size: 1.5em;
+            
 
+        }
+        .symbol{
+            
+            transition: all 1s ease-out;
         }
 
         #Morpion {
@@ -126,6 +128,7 @@
 
         .cell:hover {
             background-color: lightblue;
+          
         }
 
         h1,
@@ -138,7 +141,8 @@
 
         .score,
         #message {
-            font-size: 4em;
+            font-size: 4em;  
+         
         }
 
         #reset {
@@ -149,3 +153,4 @@
         .playerTurn {
             background-color: #45f0a4;
         }
+  
