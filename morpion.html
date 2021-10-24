@@ -40,8 +40,6 @@
         </div>
 
     </main>
-
-
     <p id="reset">
         <button id="newSet">Nouvelle manche</button>
         <a href="morpion.html">Redémarrer une nouvelle partie</a>
@@ -149,13 +147,13 @@
                     if (counter <= 9 && victory === true) {
                         displayMessage("Victoire de "+Player.playerTurn.name+" " + Player.playerTurn.symbol)
                         Player.playerTurn.increaseScore()
-                        Player.playerTurn.tag.querySelector(".symbol").style.scale = "10"
+                        Player.playerTurn.tag.querySelector(".symbol").style.scale = "4"
 
                         finish();
                         newSetButton.style.display = "initial"
                     } else if (counter === 9 && victory === true) {
                         displayMessage("Victoire de "+Player.playerTurn.name+" " + Player.playerTurn.symbol)
-                        Player.playerTurn.tag.querySelector(".symbol").style.scale = "10"
+                        Player.playerTurn.tag.querySelector(".symbol").style.scale = "4"
                         Player.playerTurn.increaseScore()
                         finish();
                         newSetButton.style.display = "initial"

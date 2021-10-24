@@ -14,64 +14,30 @@ main {
     flex-wrap: wrap;
 }
 
-:focus {
-    outline: 5px;
-}
-
 body,
-input,
-textarea,
-keygen,
-select,
 button {
     font-family: 'Architects Daughter', cursive;
 }
 
-input,
-textarea,
 keygen,
-select,
-button,
 table,
-.hd-border,
-fieldset,
-.checkbox>input[type="checkbox"]+label:before,
-.radio>input[type="radio"]+label:before {
+.hd-border {
     background-color: azure;
     outline: none;
     border: 2px solid #919090;
     border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-    /*
-        Above is shorthand for:
-        border-top-left-radius: 255px 15px;
-        border-top-right-radius: 15px 225px;
-        border-bottom-right-radius: 225px 15px;
-        border-bottom-left-radius:15px 255px;
-        */
 }
 
 body,
-a,
-input,
-select,
-button,
-textarea {
+a{
     color: black;
 }
 
-/**/
-input[type=button],
 button {
     background: #000000;
     font-size: 1em;
     cursor: pointer;
     color: white;
-}
-
-@font-face {
-    font-family: "icons";
-    src: url("fonts/icons.eot");
-    src: url("fonts/icons.eot?#iefix") format("eot"), url("fonts/icons.woff") format("woff"), url("fonts/icons.ttf") format("truetype");
 }
 
 * {
@@ -83,8 +49,6 @@ button {
     flex: 1;
     min-width: 150px;
     font-size: 1.5em;
-    
-
 }
 .symbol{
     
@@ -120,8 +84,7 @@ button {
 }
 
 .cell:hover {
-    background-color: lightblue;
-    
+    background-color: rgb(79, 184, 219);
 }
 
 h1,
@@ -144,6 +107,30 @@ p,
     font-size: 2em;
 }
 
-.playerTurn {
-    background-color: #45f0a4;
-}
+    @media screen and (max-width: 850px) {
+
+    .cell{
+        width: 100px;
+    height: 100px;
+    }
+
+    #grid {
+        width: 300px;
+    height: 300px;
+
+    }
+    .score,.name,.symbol,#message,#reset {
+        font-size: 1em;
+        margin: 0px;
+        padding: 0px;
+    }
+    .player {
+        flex: 1;
+        min-width: fit-content;
+        height:fit-content;
+        font-size: 1.5em;
+    }
+    .symbol{
+        transition: all 1s ease-out;
+    }
+  }
